@@ -681,6 +681,12 @@ void AutoTypePlatformX11::SendKeyPressedEvent(KeySym keysym)
     SendEvent(&event, KeyPress);
     SendEvent(&event, KeyRelease);
 
+    /* without a small delay between keys, characters are sometime lost... */
+    timespec ts;
+    ts.tv_sec = 0;
+    ts.tv_nsec = 10 * 1000 * 1000;
+    nanosleep(&ts, Q_NULLPTR);
+
     /* release the modifiers */
     SendModifier(&event, mask, KeyRelease);
 
