@@ -1,0 +1,23 @@
+# Maintainer: Benoit Pierre <benoit.pierre@gmail.com>
+
+pkgname=keepassx
+pkgver=
+pkgrel=1
+pkgdesc='Password manager'
+arch=('i686' 'x86_64')
+url='http://www.keepassx.org'
+license=('GPL2')
+depends=('libxtst' 'qt4' 'shared-mime-info')
+makedepends=('optipng')
+install=keepassx.install
+
+build() {
+  cd $pkgname-$pkgver
+  cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib .
+  make
+}
+
+package() {
+  cd $pkgname-$pkgver
+  make DESTDIR="$pkgdir" install
+}
